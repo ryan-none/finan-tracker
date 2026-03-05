@@ -13,11 +13,11 @@ export async function findUserByEmail(email: string): Promise<User | null> {
 }
 
 
-export async function createUser(email: string, password: string): Promise<User> {
+export async function createUser(name: string, email: string, password: string): Promise<User> {
   try {
     const res = await pool.query(
-      'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *',
-      [email, password]
+      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
+      [name, email, password]
     );
     return res.rows[0];
   } catch (err) {

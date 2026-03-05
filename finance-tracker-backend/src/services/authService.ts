@@ -6,11 +6,11 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'changeme';
 const JWT_EXPIRES_IN = '1h';
 
-export async function signup(email: string, password: string): Promise<UserSafe> {
+export async function signup(name: string, email: string, password: string) {
   const existing = await findUserByEmail(email);
   if (existing) throw new Error('Email already exists');
   const hashed = await hashPassword(password);
-  const user = await createUser(email, hashed);
+  const user = await createUser(name, email, hashed);
   const { password: _, ...userSafe } = user;
   return userSafe;
 }

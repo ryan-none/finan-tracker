@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 import { errorHandler } from './middleware/errorHandler';
@@ -9,6 +10,12 @@ import { authenticateToken } from './middleware/authMiddleware';
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173', // palitan mo ito depende sa frontend port mo
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use(logger);
 

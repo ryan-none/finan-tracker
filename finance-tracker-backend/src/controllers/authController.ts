@@ -11,10 +11,10 @@ function logSuccess(context: string, message: string, data?: any) {
 
 export async function signupController(req: Request, res: Response, next: NextFunction) {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      logError('signupController', 'Email and password required');
-      return res.status(400).json({ success: false, message: 'Email and password required' });
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      logError('signupController', 'Name, email and password required');
+      return res.status(400).json({ success: false, message: 'Name, email and password required' });
     }
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       logError('signupController', 'Invalid email format');
@@ -24,7 +24,7 @@ export async function signupController(req: Request, res: Response, next: NextFu
       logError('signupController', 'Password must be at least 8 characters');
       return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
     }
-    const user = await signup(email, password);
+    const user = await signup(name, email, password);
     logSuccess('signupController', `User signed up: ${email}`);
     return res.status(201).json({ success: true, user });
   } catch (err: any) {
